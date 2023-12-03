@@ -2,7 +2,7 @@ fn main() {
     let input = std::env::args().skip(1);
 
     let output = input
-        .map(|s| s.chars().map(|c| rot13(c)).collect::<String>())
+        .map(|s| s.chars().map(rot13).collect::<String>())
         .collect::<Vec<String>>()
         .join(" ");
 
@@ -20,8 +20,8 @@ fn test_rot13_conversion() {
 
 fn rot13(from: char) -> char {
     match from {
-        'A'..='Z' => char::from_u32(((from as u32) - 64 + 13) % 26 + 64).unwrap_or(from),
-        'a'..='z' => char::from_u32(((from as u32) - 96 + 13) % 26 + 96).unwrap_or(from),
+        'A'..='Z' => ((from as u8 - b'A' + 13) % 26 + b'A') as char,
+        'a'..='z' => ((from as u8 - b'a' + 13) % 26 + b'a') as char,
         _ => from,
     }
 }
