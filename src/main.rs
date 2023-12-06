@@ -17,7 +17,7 @@ fn main() {
             .join(" ")
     };
 
-    println!("{}", output);
+    print!("{}", output);
 }
 
 #[test]
