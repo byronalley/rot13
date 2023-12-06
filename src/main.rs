@@ -1,22 +1,17 @@
 use std::io;
 
 fn main() {
-    let args = std::env::args().skip(1).collect::<Vec<String>>();
-
-    let output = if args.is_empty() {
-        io::read_to_string(io::stdin())
-            .unwrap()
-            .chars()
-            .map(rot13)
-            .collect::<String>()
-    } else {
-        std::env::args()
-            .skip(1)
-            .map(|s| s.chars().map(rot13).collect::<String>())
-            .collect::<Vec<String>>()
-            .join(" ")
+    let input = match std::env::args()
+        .skip(1)
+        .collect::<Vec<String>>()
+        .join(" ")
+        .as_str()
+    {
+        "" => io::read_to_string(io::stdin()).unwrap(),
+        args => args.to_string(),
     };
 
+    let output = input.chars().map(rot13).collect::<String>();
     print!("{}", output);
 }
 
