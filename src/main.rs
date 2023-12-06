@@ -1,10 +1,21 @@
-fn main() {
-    let input = std::env::args().skip(1);
+use std::io;
 
-    let output = input
-        .map(|s| s.chars().map(rot13).collect::<String>())
-        .collect::<Vec<String>>()
-        .join(" ");
+fn main() {
+    let args = std::env::args().skip(1).collect::<Vec<String>>();
+
+    let output = if args.is_empty() {
+        io::read_to_string(io::stdin())
+            .unwrap()
+            .chars()
+            .map(rot13)
+            .collect::<String>()
+    } else {
+        std::env::args()
+            .skip(1)
+            .map(|s| s.chars().map(rot13).collect::<String>())
+            .collect::<Vec<String>>()
+            .join(" ")
+    };
 
     println!("{}", output);
 }
